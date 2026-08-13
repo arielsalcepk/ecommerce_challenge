@@ -83,4 +83,12 @@ The two "attack" rows in the sample CSV (`<script>alert('xss')</script>` as a pr
 
 ## AI usage disclosure
 
-This project was built with AI assistance (Claude). Per the challenge instructions, comments have been removed from the application code (`lib/`, including the generated Phoenix scaffold). Standard operational comments in `config/*.exs` (watcher setup, SSL notes, clustering) were left as-is — they're framework-standard reference notes for future maintainers, not explanatory comments about this app's logic.
+This project was built in collaboration with Claude (Anthropic). I used it the way the closing note in the brief describes — as something to direct against my own judgment, not something to accept output from wholesale. Most of the decisions in the table above only landed where they did after I pushed on the reasoning behind them:
+
+- On category modeling, I asked for the real tradeoffs between a plain string, a hard enum, and a proper `categories` table — including how platforms like Shopify or WooCommerce actually model this in production — before agreeing to scope down to a string column for time, with the FK design documented as the next step rather than silently dropped.
+- On pagination, an early pass wasn't explicit about where filtering happened, so I asked for it to be pushed down to the database via `LIMIT`/`OFFSET` rather than fetched and filtered in the app.
+- On the CSV importer, I questioned whether a bulk `insert_all` would outperform per-row inserts — which surfaced a real Postgres limitation (`ON CONFLICT DO UPDATE` can't target the same key twice in one statement), confirming per-row inserts were the correct choice for this file, not just the simpler one.
+- On duplicate SKUs, I asked what would actually break if re-imports rejected repeats instead of upserting, before agreeing that idempotent re-import was the correct read of the sample data.
+- On authentication, I caught the reasoning being framed as "no time for it" and asked whether it was actually a stated requirement. It wasn't — a more honest justification than a time cut, and the one that made it into the table.
+
+Per the challenge's instructions, comments have been removed from the application code (`lib/`, including the generated Phoenix scaffold). Standard operational comments in `config/*.exs` (watcher setup, SSL notes, clustering) were left as-is — they're framework-standard reference notes for future maintainers, not explanatory comments about this app's logic.
