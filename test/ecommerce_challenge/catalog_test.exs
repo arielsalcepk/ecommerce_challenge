@@ -8,7 +8,15 @@ defmodule EcommerceChallenge.CatalogTest do
 
     import EcommerceChallenge.CatalogFixtures
 
-    @invalid_attrs %{name: nil, description: nil, category: nil, sku: nil, price: nil, stock: nil, weight_kg: nil}
+    @invalid_attrs %{
+      name: nil,
+      description: nil,
+      category: nil,
+      sku: nil,
+      price: nil,
+      stock: nil,
+      weight_kg: nil
+    }
 
     test "list_products/0 returns all products" do
       product = product_fixture()
@@ -21,7 +29,15 @@ defmodule EcommerceChallenge.CatalogTest do
     end
 
     test "create_product/1 with valid data creates a product" do
-      valid_attrs = %{name: "some name", description: "some description", category: "some category", sku: "some sku", price: "120.5", stock: 42, weight_kg: "120.5"}
+      valid_attrs = %{
+        name: "some name",
+        description: "some description",
+        category: "some category",
+        sku: "some sku",
+        price: "120.5",
+        stock: 42,
+        weight_kg: "120.5"
+      }
 
       assert {:ok, %Product{} = product} = Catalog.create_product(valid_attrs)
       assert product.name == "some name"
@@ -39,7 +55,16 @@ defmodule EcommerceChallenge.CatalogTest do
 
     test "update_product/2 with valid data updates the product" do
       product = product_fixture()
-      update_attrs = %{name: "some updated name", description: "some updated description", category: "some updated category", sku: "some updated sku", price: "456.7", stock: 43, weight_kg: "456.7"}
+
+      update_attrs = %{
+        name: "some updated name",
+        description: "some updated description",
+        category: "some updated category",
+        sku: "some updated sku",
+        price: "456.7",
+        stock: 43,
+        weight_kg: "456.7"
+      }
 
       assert {:ok, %Product{} = product} = Catalog.update_product(product, update_attrs)
       assert product.name == "some updated name"

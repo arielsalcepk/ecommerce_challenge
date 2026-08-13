@@ -10,7 +10,8 @@ defmodule EcommerceChallenge.Application do
     children = [
       EcommerceChallengeWeb.Telemetry,
       EcommerceChallenge.Repo,
-      {DNSCluster, query: Application.get_env(:ecommerce_challenge, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:ecommerce_challenge, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: EcommerceChallenge.PubSub},
       # Start a worker by calling: EcommerceChallenge.Worker.start_link(arg)
       # {EcommerceChallenge.Worker, arg},
