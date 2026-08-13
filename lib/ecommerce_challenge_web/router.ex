@@ -22,6 +22,7 @@ defmodule EcommerceChallengeWeb.Router do
     live "/products/new", ProductLive.Form, :new
     live "/products/:id", ProductLive.Show, :show
     live "/products/:id/edit", ProductLive.Form, :edit
+    live "/orders/:id", OrderLive.Show, :show
   end
 
   # Other scopes may use custom stacks.
